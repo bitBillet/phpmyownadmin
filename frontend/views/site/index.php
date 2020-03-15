@@ -20,7 +20,7 @@ $this->title = 'My Yii Application';
                 SQL Script
                 <ul>
                     <li>
-                        <a>All Scripts</a>
+                        <a href="script/script-history">All Scripts</a>
                     </li>
                     <li>
                         <a href="/script/sql-script">Create SQL Script</a>
@@ -29,4 +29,5 @@ $this->title = 'My Yii Application';
             </li>
         </ul>
     </ul>
+
 </div>

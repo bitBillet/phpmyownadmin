@@ -4,9 +4,9 @@ use yii\helpers\Html;
 /* @var $model string */
 $this->title = 'SQL Script';
 ?>
-<?php if($model) {
-    var_dump($model);
-} ?>
+
+<div class='select-table'><?= $model; ?></div>
+
 
 <h1><?=$this->title?></h1>
 <div class="script-form">

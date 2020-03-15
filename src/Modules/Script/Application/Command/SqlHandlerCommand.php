@@ -1,17 +1,24 @@
 <?php
 namespace src\Modules\Script\Application\Command;
 
+use src\Modules\Script\Domain\Service\DrawTableService;
 use src\Modules\Script\Domain\Service\SqlHandlerServiceInterface;
 
 class SqlHandlerCommand
 {
-    private $service;
-    public function __construct(SqlHandlerServiceInterface $service)
+    private $sendService;
+    public function __construct(SqlHandlerServiceInterface $sendService)
     {
-        $this->service = $service;
+        $this->sendService = $sendService;
     }
     public function execute()
     {
-        return $this->service->send();
+        $sendResult = $this->sendService->send();
+        if ($sendResult[0] === 'select') {
+            return DrawTableService::drawTable($sendResult);
+        }
+        else {
+            return $sendResult;
+        }
     }
 }

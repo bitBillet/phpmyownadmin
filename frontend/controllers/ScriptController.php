@@ -21,4 +21,9 @@ class ScriptController extends Controller
         }
         return $this->render('sqlScript', ['model' => $model]);
     }
+
+    public function actionScriptHistory()
+    {
+        return $this->render('scriptHistory');
+    }
 }
