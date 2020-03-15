@@ -142,7 +142,10 @@ class SiteController extends Controller
      */
     public function actionAbout()
     {
-        return $this->render('about');
+        if (Yii::$app->request->post()) {
+            echo Yii::$app->request->getBodyParams()['text'];
+        }
+//        return $this->render('about');
     }
 
     /**
@@ -256,5 +259,9 @@ class SiteController extends Controller
         return $this->render('resendVerificationEmail', [
             'model' => $model
         ]);
+    }
+
+    public function actionCreate() {
+        return $this->render('create');
     }
 }
