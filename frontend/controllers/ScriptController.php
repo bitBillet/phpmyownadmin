@@ -7,6 +7,7 @@ use Yii;
 use yii\web\Controller;
 use src\Modules\Script\Application\Command\SqlHandlerCommand;
 use src\Modules\Script\Domain\Service\SqlHandlerService;
+use src\Modules\Script\Domain\Entity\ScriptHistoryTableEntity;
 
 class ScriptController extends Controller
 {
@@ -16,7 +17,8 @@ class ScriptController extends Controller
         if (Yii::$app->request->post()) {
             $text = Yii::$app->request->getBodyParams()['text'];
             $service = new SqlHandlerService($text);
-            $request = new SqlHandlerCommand($service);
+            $entity = new ScriptHistoryTableEntity($text);
+            $request = new SqlHandlerCommand($service, $entity);
             $model = $request->execute();
         }
         return $this->render('sqlScript', ['model' => $model]);
@@ -24,6 +26,8 @@ class ScriptController extends Controller
 
     public function actionScriptHistory()
     {
-        return $this->render('scriptHistory');
+        $historyEntity = new ScriptHistoryTableEntity();
+        $model = $historyEntity->getData();
+        return $this->render('scriptHistory', ['model' => $model]);
     }
 }

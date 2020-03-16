@@ -7,7 +7,7 @@ use src\Core\Domain\Service\DrawTableServiceInterface;
 
 class DrawTableService implements DrawTableServiceInterface
 {
-    public static function drawTable(array $model): string
+    public static function drawSelectTable(array $model): string
     {
         $drawResult = [];
         $keys = array_keys($model[1][0]);
@@ -22,6 +22,17 @@ class DrawTableService implements DrawTableServiceInterface
                 $drawResult[]= "<td> $column </td>";
             }
             $drawResult[]= "</tr>";
+        }
+        return implode($drawResult);
+    }
+
+    public static function drawTable(array $model): string
+    {
+        $drawResult = [];
+        foreach ($model as $rows) {
+            foreach ($rows as $row) {
+                $drawResult[]= "<p> $row </p>";
+            }
         }
         return implode($drawResult);
     }
