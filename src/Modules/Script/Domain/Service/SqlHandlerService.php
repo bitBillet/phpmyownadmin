@@ -4,13 +4,13 @@ namespace src\Modules\Script\Domain\Service;
 use src\Modules\Script\Domain\Repository\SqlHandlerRepository;
 use yii\web\NotFoundHttpException;
 
-class SqlHandlerService implements SqlHandlerServiceInterface
+class SqlHandlerService
 {
     private $isTableCreate;
     private $isColumnCreate;
     private $fullRequest;
     private $sqlCommand;
-    public function __construct (string $fullRequest)
+    public function textScanner (string $fullRequest)
     {
         $isDatabaseCommand = preg_match('/database|databases/i', $fullRequest);
         if ($isDatabaseCommand) {
@@ -22,8 +22,9 @@ class SqlHandlerService implements SqlHandlerServiceInterface
         $this->sqlCommand = $arr[0];
         $this->fullRequest = $fullRequest;
     }
-    public function send()
+    public function send(string $text)
     {
+        $this->textScanner($text);
         $repo = new SqlHandlerRepository();
         $lowerSqlCommand = strtolower($this->sqlCommand);
         if ($lowerSqlCommand === 'select' ||  $lowerSqlCommand === 'show') {

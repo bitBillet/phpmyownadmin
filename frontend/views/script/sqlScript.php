@@ -1,11 +1,11 @@
 <?php
 use yii\helpers\Html;
 /* @var $this yii\web\View */
-/* @var $model string */
+/* @var $data string */
 $this->title = 'SQL Script';
 ?>
 
-<div class='select-table'><?= $model; ?></div>
+<div class='select-table'><?= $data; ?></div>
 
 
 <h1><?=$this->title?></h1>

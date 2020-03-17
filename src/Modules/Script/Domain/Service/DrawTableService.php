@@ -3,9 +3,8 @@
 
 namespace src\Modules\Script\Domain\Service;
 
-use src\Core\Domain\Service\DrawTableServiceInterface;
 
-class DrawTableService implements DrawTableServiceInterface
+class DrawTableService
 {
     public static function drawSelectTable(array $model): string
     {

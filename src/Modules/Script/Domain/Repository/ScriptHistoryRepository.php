@@ -3,11 +3,11 @@
 
 namespace src\Modules\Script\Domain\Repository;
 
-use src\Core\Domain\Repository\RecordRepositoryInterface;
+
 use Yii;
 use yii\db\Query;
 
-class ScriptHistoryRepository implements RecordRepositoryInterface
+class ScriptHistoryRepository
 {
     private $record;
     private $tableName;
@@ -24,7 +24,7 @@ class ScriptHistoryRepository implements RecordRepositoryInterface
             'text' => $this->record,
             ])->execute();
     }
-    public function getTableData()
+    public function getTableData(): array
     {
         return (new Query())
             ->select(["text"])

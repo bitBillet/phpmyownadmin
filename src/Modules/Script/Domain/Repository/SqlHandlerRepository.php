@@ -3,7 +3,7 @@
 namespace src\Modules\Script\Domain\Repository;
 use Yii;
 
-class SqlHandlerRepository implements SqlHandlerRepositoryInterface
+class SqlHandlerRepository
 {
     public function sqlRequest(string $fullSql)
     {
