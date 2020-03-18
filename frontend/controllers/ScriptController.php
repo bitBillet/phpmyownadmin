@@ -3,49 +3,45 @@
 
 namespace frontend\controllers;
 
+use src\Modules\Script\Application\Command\ScriptHistoryCommand;
+use src\Modules\Script\Domain\Repository\ScriptHandlerRepository;
+use src\Modules\Script\Domain\Service\ScriptHandlerService;
+use src\Modules\Script\Domain\Service\ScriptResponseService;
 use Yii;
 use yii\web\Controller;
-use src\Modules\Script\Application\Command\SqlHandlerCommand;
-use src\Modules\Script\Domain\Service\SqlHandlerService;
-use src\Modules\Script\Domain\Entity\ScriptHistoryTableEntity;
+use src\Modules\Script\Application\Command\ScriptHandlerCommand;
 use src\Modules\Script\Domain\Repository\ScriptHistoryRepository;
 
 class ScriptController extends Controller
 {
-    private $command;
-    private $service;
-    private $historyEntity;
-    private $historyRepo;
+    private $scriptHandlerCommand;
+    private $scriptHistoryCommand;
 
     public function __construct(
         $id,
         $module,
-        ScriptHistoryRepository $historyRepo,
-        SqlHandlerCommand $command,
-        SqlHandlerService $service,
-        ScriptHistoryTableEntity $historyEntity,
+        ScriptHandlerCommand $scriptHandlerCommand,
+        ScriptHistoryCommand $scriptHistoryCommand,
         $config = []
     ) {
-        $this->historyRepo = $historyRepo;
-        $this->command = $command;
-        $this->historyEntity = $historyEntity;
-        $this->service = $service;
+        $this->scriptHandlerCommand = $scriptHandlerCommand;
+        $this->scriptHistoryCommand = $scriptHistoryCommand;
         parent::__construct($id, $module, $config);
     }
 
     public function actionSqlScript()
     {
-        $data = null;
+        $htmlResponse = null;
         if (Yii::$app->request->post()) {
-            $text = Yii::$app->request->getBodyParams()['text'];
-            $data = $this->command->execute($this->service, $this->historyEntity, $this->historyRepo, $text);
+            $record = Yii::$app->request->getBodyParams()['text'];
+            $htmlResponse = $this->scriptHandlerCommand->execute($record);
         }
-        return $this->render('sqlScript', ['data' => $data]);
+        return $this->render('sqlScript', ['data' => $htmlResponse]);
     }
 
     public function actionScriptHistory()
     {
-        $data = $this->historyEntity->getData();
-        return $this->render('scriptHistory', ['model' => $data]);
+        $scriptHistoryHtml = $this->scriptHistoryCommand->execute();
+        return $this->render('scriptHistory', ['data' => $scriptHistoryHtml]);
     }
 }

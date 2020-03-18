@@ -9,25 +9,24 @@ use yii\db\Query;
 
 class ScriptHistoryRepository
 {
-    private $record;
     private $tableName;
 
-    public function __construct(string $tableName, $record = null)
+    public function __construct(string $tableName = 'script_history')
     {
-        $this->record = $record;
         $this->tableName = $tableName;
     }
 
-    public function addRecordToTable()
+    public function addRecordToTable($record)
     {
         Yii::$app->db->createCommand()->insert($this->tableName, [
-            'text' => $this->record,
+            'text' => $record,
+            'date' => date('Y-m-d')
             ])->execute();
     }
     public function getTableData(): array
     {
         return (new Query())
-            ->select(["text"])
+            ->select(["text", "date"])
             ->from($this->tableName)
             ->all();
     }
